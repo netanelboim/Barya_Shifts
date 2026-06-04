@@ -117,9 +117,11 @@
    ║  הגדרות                                              ║
    ╚══════════════════════════════════════════════════════╝ */
 
-const ADMIN_CODE  = "baryaelboim";
-const REQUIRED    = 3;      /* מתנדבים למשמרת רגילה */
+const ADMIN_CODE      = "baryaelboim";
+const REQUIRED_DEFAULT = 3;   /* ברירת מחדל — מנהל יכול לשנות מהממשק */
 const URGENT_DAYS = 4;
+/* REQUIRED הוא תמיד פונקציה — קורא מ-settings.required או מהברירת מחדל */
+function REQUIRED(){ return Number(settings.required) || REQUIRED_DEFAULT; }
 const SEASON_START = new Date(2026, 5, 9);   /* 09.06.2026 */
 
 const SPECIAL_SHIFTS = {
@@ -207,8 +209,8 @@ function shiftsForMonth(y,m){
       out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-X",date,kind:sp.kind,required:sp.required,special:true,isSaturday:false});
       continue;
     }
-    if(dow===4) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-T",date,kind:"חמישי",required:REQUIRED,isSaturday:false});
-    else if(dow===6) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-S",date,kind:"מוצ\u05f4ש",required:REQUIRED,isSaturday:true});
+    if(dow===4) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-T",date,kind:"חמישי",required:REQUIRED(),isSaturday:false});
+    else if(dow===6) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-S",date,kind:"מוצ\u05f4ש",required:REQUIRED(),isSaturday:true});
   }
   return out;
 }
@@ -240,7 +242,7 @@ function reqForSlot(shiftId, slotIdx){
   const cfg = shiftConfig[shiftId];
   if(cfg && cfg.halfEnabled && cfg.slots && cfg.slots[slotIdx])
     return Number(cfg.slots[slotIdx].required) || 2;
-  return REQUIRED;
+  return REQUIRED();
 }
 /* האם משמרת שלמה מלאה (לצורך CSS) */
 function isShiftFull(shift){
@@ -295,6 +297,12 @@ function removeFromRoster(nm){ refRoster.set(roster.filter(n=>n!==nm)); }
 function saveSiteUrl(){
   const el=document.getElementById("siteUrl"); if(!el) return;
   refSettings.child("siteUrl").set(el.value.trim()); okMsg="הקישור נשמר"; errMsg=""; render();
+}
+function saveRequired(){
+  const el=document.getElementById("requiredInput"); if(!el) return;
+  const val=Number(el.value);
+  if(!val||val<1||val>10){ errMsg="הכניסו מספר בין 1 ל-10"; return render(); }
+  refSettings.child("required").set(val); okMsg="עודכן ל-"+val+" מתנדבים למשמרת"; errMsg=""; render();
 }
 function tryAdmin(){
   const v=(document.getElementById("codeInput")||{}).value||"";
@@ -387,7 +395,7 @@ function render(){
 
   let h="";
   h+='<div class="title">לוח מתנדבים בריה</div>';
-  h+='<div class="sub">לוח משמרות מתנדבים · ימי חמישי ומוצאי שבת · '+REQUIRED+' מתנדבים למשמרת</div>';
+  h+='<div class="sub">לוח משמרות מתנדבים · ימי חמישי ומוצאי שבת · '+REQUIRED()+' מתנדבים למשמרת</div>';
   h+='<div class="rule"></div>';
 
   /* כרטיס זיהוי */
@@ -536,6 +544,12 @@ function render(){
     h+='<div style="display:flex;gap:8px">';
     h+='<input class="input" id="siteUrl" placeholder="https://...github.io/bar/" value="'+esc(settings.siteUrl||"")+'">';
     h+='<button class="ghostbtn" id="saveUrl">שמור</button></div>';
+    h+='<div class="label" style="margin-top:14px">מספר מתנדבים נדרש למשמרת רגילה</div>';
+    h+='<div style="display:flex;gap:8px;align-items:center">';
+    h+='<input class="mini-input" type="number" min="1" max="10" id="requiredInput" value="'+REQUIRED()+'">';
+    h+='<button class="ghostbtn" id="saveRequired">שמור</button>';
+    h+='<span class="note">כרגע: '+REQUIRED()+' מתנדבים</span>';
+    h+='</div>';
     h+='</div>';
 
     h+='<div class="card admin-card">';
@@ -635,7 +649,7 @@ function wire(){
 
   /* join / leave */
   document.querySelectorAll("[data-join]").forEach(b=>{
-    b.onclick=()=>join(b.getAttribute("data-join"), Number(b.getAttribute("data-req"))||REQUIRED);
+    b.onclick=()=>join(b.getAttribute("data-join"), Number(b.getAttribute("data-req"))||REQUIRED());
   });
   document.querySelectorAll("[data-leave]").forEach(x=>{
     x.onclick=()=>leave(x.getAttribute("data-leave"),x.getAttribute("data-who"));
@@ -690,6 +704,8 @@ function wire(){
   document.querySelectorAll("[data-rmvol]").forEach(b=>{ b.onclick=()=>removeFromRoster(b.getAttribute("data-rmvol")); });
   const su=document.getElementById("saveUrl");
   if(su) su.onclick=saveSiteUrl;
+  const sr=document.getElementById("saveRequired");
+  if(sr) sr.onclick=saveRequired;
 }
 </script>
 </body>
