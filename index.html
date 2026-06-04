@@ -23,6 +23,9 @@
   .label { font-size: 0.82rem; color: #8a7d68; margin-bottom: 6px; }
   .input, select.input { width: 100%; padding: 11px 13px; border-radius: 9px; background: #fffdf8; border: 1px solid #d8cbb2; color: #3a322a; font-family: inherit; font-size: 1rem; }
   .input:focus { outline: none; border-color: #c9962f; }
+  input[type=number].input { -moz-appearance: textfield; }
+  input[type=number].input::-webkit-outer-spin-button,
+  input[type=number].input::-webkit-inner-spin-button { -webkit-appearance: none; }
   .nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .nav h2 { font-family: 'Frank Ruhl Libre', serif; font-size: 1.4rem; font-weight: 700; color: #2a2018; }
   .navbtn { background: #fffdf8; border: 1px solid #d8cbb2; color: #3a322a; width: 38px; height: 38px; border-radius: 9px; cursor: pointer; font-size: 1.2rem; }
@@ -35,25 +38,37 @@
   .pill.alert .big { color: #b5482e; }
   .pill.ok { border-color: #a7ca9c; background: #eef5e9; }
   .pill.ok .big { color: #3f7a37; }
-  .shift { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-radius: 11px; margin-bottom: 9px; border: 1px solid #e3d8c4; background: #fffdf8; flex-wrap: wrap; }
-  .shift.gap { border-color: #e0a48f; }
+
+  /* ── כרטיס משמרת ── */
+  .shift { border-radius: 11px; margin-bottom: 12px; border: 1px solid #e3d8c4; background: #fffdf8; overflow: hidden; }
+  .shift.gap {}
   .shift.full { border-color: #a7ca9c; }
   .shift.urgent { border-color: #d9542f; box-shadow: 0 0 0 1px #d9542f inset; }
   .shift.past { opacity: 0.5; }
+  .shift-header { display: flex; align-items: center; gap: 10px; padding: 13px 14px; flex-wrap: wrap; }
   .shift-date { font-weight: 500; min-width: 96px; }
+  .shift-time { font-size: 0.8rem; color: #8a7d68; }
   .shift-kind { font-size: 0.72rem; color: #2a2018; background: #c9962f; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
   .shift-kind.special { background: #6f4bd8; color: #fff; }
   .urgent-tag { font-size: 0.7rem; color: #fff; background: #c0392b; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
-  .shift-names { flex: 1; display: flex; gap: 6px; flex-wrap: wrap; min-width: 140px; }
+  .half-tag { font-size: 0.7rem; color: #fff; background: #4a7fc1; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
+
+  /* ── Slot (משמרת שלמה או חצי) ── */
+  .slot-section { border-top: 1px solid #ece1cc; padding: 10px 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .slot-label { font-size: 0.78rem; color: #5a4f3e; font-weight: 600; min-width: 115px; }
+  .slot-time-badge { font-size: 0.72rem; color: #8a7d68; background: #f1e8d6; border: 1px solid #e3d8c4; border-radius: 12px; padding: 1px 7px; }
+  .shift-names { flex: 1; display: flex; gap: 6px; flex-wrap: wrap; min-width: 120px; }
   .chip { background: #f1e8d6; border: 1px solid #ddd0b6; border-radius: 20px; padding: 3px 9px; font-size: 0.84rem; display: flex; align-items: center; gap: 6px; }
+  .chip.full-chip { background: #dff0da; border-color: #a7ca9c; }
   .chip .x { cursor: pointer; color: #8a7d68; font-weight: 700; }
   .chip .x:hover { color: #b5482e; }
   .empty-slot { border: 1px dashed #c3b491; border-radius: 20px; padding: 3px 11px; font-size: 0.8rem; color: #a3957a; }
-  .joinbtn { background: #c9962f; color: #2a2018; border: none; padding: 7px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.88rem; }
+  .joinbtn { background: #c9962f; color: #2a2018; border: none; padding: 7px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.88rem; white-space: nowrap; }
   .joinbtn:hover { background: #b8862a; }
   .joinbtn:disabled { background: #e3d8c4; color: #a3957a; cursor: not-allowed; }
   .ghostbtn { background: none; border: 1px solid #d8cbb2; color: #3a322a; padding: 9px 14px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.88rem; }
   .ghostbtn:hover { border-color: #c9962f; }
+  .ghostbtn.sm { padding: 5px 10px; font-size: 0.8rem; }
   .wabtn { background: #1f7a3a; color: #fff; border: none; padding: 10px 16px; border-radius: 9px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.92rem; width: 100%; }
   .wabtn:hover { background: #249147; }
   .err { color: #b5482e; font-size: 0.86rem; margin: 8px 0; }
@@ -72,6 +87,23 @@
   .roster-row .nm { flex: 1; }
   .section-title { font-family: 'Frank Ruhl Libre', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: #2a2018; }
   .admin-card { border-color: #c9d8be; background: #f3f6ec; }
+
+  /* ── Admin shift config panel ── */
+  .shift-admin-bar { border-top: 1px dashed #c9d8be; background: #f0f5ea; padding: 8px 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .shift-admin-bar .label { margin: 0; font-size: 0.78rem; }
+  .admin-config-box { border-top: 1px solid #c9d8be; background: #e8f0e1; padding: 12px 14px; }
+  .admin-config-box .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .admin-config-box .row:last-child { margin-bottom: 0; }
+  .mini-input { width: 60px; padding: 6px 8px; border-radius: 7px; background: #fffdf8; border: 1px solid #d8cbb2; color: #3a322a; font-family: inherit; font-size: 0.9rem; text-align: center; }
+  .mini-input:focus { outline: none; border-color: #c9962f; }
+  .savebtn { background: #3f7a37; color: #fff; border: none; padding: 6px 13px; border-radius: 7px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.82rem; }
+  .savebtn:hover { background: #4d9444; }
+  .cancelbtn { background: none; border: 1px solid #aaa; color: #5a4f3e; padding: 6px 11px; border-radius: 7px; cursor: pointer; font-family: inherit; font-size: 0.82rem; }
+  .cancelbtn:hover { border-color: #888; }
+  .toggle-half-btn { background: #4a7fc1; color: #fff; border: none; padding: 4px 11px; border-radius: 7px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.78rem; }
+  .toggle-half-btn:hover { background: #3a6fa8; }
+  .toggle-half-btn.off { background: #aaa; }
+  .toggle-half-btn.off:hover { background: #888; }
 </style>
 </head>
 <body>
@@ -82,10 +114,29 @@
 
 <script>
 /* ╔══════════════════════════════════════════════════════╗
-   ║  הגדרות — אין צורך לערוך דבר. הכול כבר מולא.           ║
+   ║  הגדרות                                              ║
    ╚══════════════════════════════════════════════════════╝ */
 
-const ADMIN_CODE = "baryaelboim";
+const ADMIN_CODE  = "baryaelboim";
+const REQUIRED    = 3;      /* מתנדבים למשמרת רגילה */
+const URGENT_DAYS = 4;
+const SEASON_START = new Date(2026, 5, 9);   /* 09.06.2026 */
+
+const SPECIAL_SHIFTS = {
+  "2026-5-9": { kind: "ערב פתיחה", required: 3 }
+};
+
+/*
+  shiftConfig (Firebase: "shiftConfig/<shiftId>") — תצורת חצי-משמרות לכל ערב
+  {
+    halfEnabled: true/false,
+    slots: [
+      { label: "פתיחה", timeRange: "19:00–21:30", required: 2 },
+      { label: "סגירה", timeRange: "21:30–00:00", required: 2 }
+    ]
+  }
+  כאשר halfEnabled=false — מוצגת משמרת שלמה רגילה
+*/
 
 const firebaseConfig = {
   apiKey: "AIzaSyBpAj-iaoO5CBTQEVlCdfPtT8mpUwGbmoE",
@@ -97,99 +148,136 @@ const firebaseConfig = {
   appId: "1:987921011289:web:a6a0e033f44d7eaa3a1748"
 };
 
-/* ────────── מכאן ואילך אין צורך לערוך דבר ────────── */
-
-const REQUIRED = 2;          /* מתנדבים למשמרת רגילה */
-const URGENT_DAYS = 4;
-/* תאריך פתיחה — שום משמרת לא תוצג לפניו */
-const SEASON_START = new Date(2026, 5, 9);   /* 09.06.2026 */
-/* משמרות חריגות (חד-פעמיות) שאינן חמישי/מוצ"ש.
-   key: "YYYY-M-D" (חודש 0-11) · required: כמה מתנדבים */
-const SPECIAL_SHIFTS = {
-  "2026-5-9": { kind: "ערב פתיחה", required: 3 }
-};
 const HE_MONTHS = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
-const HE_DAYS = ["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+const HE_DAYS   = ["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
 
-let db=null, refSignups=null, refRoster=null, refSettings=null, connected=false;
+let db=null, refSignups=null, refRoster=null, refSettings=null, refShiftConfig=null, connected=false;
 try {
   firebase.initializeApp(firebaseConfig);
-  db = firebase.database();
-  refSignups  = db.ref("signups");
-  refRoster   = db.ref("roster");
-  refSettings = db.ref("settings");
+  db            = firebase.database();
+  refSignups    = db.ref("signups");
+  refRoster     = db.ref("roster");
+  refSettings   = db.ref("settings");
+  refShiftConfig= db.ref("shiftConfig");
 } catch(e){ console.error("Firebase init failed", e); }
 
-/* ── מצב ── */
-let signups = {};          /* { shiftId: [name,name] } */
-let roster = [];           /* [name, name, ...] מאגר המתנדבים */
-let settings = {};         /* { siteUrl: "..." } */
-let loaded = { s:false, r:false, t:false };
+/* ── מצב אפליקציה ── */
+let signups     = {};   /* { slotKey: [name,name] }
+                           slotKey = shiftId          (משמרת שלמה)
+                                   | shiftId+":0"     (חצי-משמרת slot 0)
+                                   | shiftId+":1"     (חצי-משמרת slot 1)  */
+let roster      = [];
+let settings    = {};
+let shiftConfig = {};   /* { shiftId: { halfEnabled, slots:[{label,timeRange,required}] } } */
+let loaded      = { s:false, r:false, t:false, c:false };
+
 const now = new Date();
 let view = { year: now.getFullYear(), month: now.getMonth() };
 let userName = "";
-let isAdmin = false;
+let isAdmin  = false;
 let showAdminBox = false;
-let showJoinBox = false;
+let showJoinBox  = false;
 let errMsg = "", okMsg = "";
 
-/* ── תאריכים ── */
+/* adminOpenConfig: shiftId שעבורו פתוח panel עריכה, או null */
+let adminOpenConfig = null;
+/* ערכים זמניים בתוך panel עריכה */
+let cfgDraft = {};
+
+/* ── Firebase listeners ── */
+if(db){
+  refSignups.on("value",     s=>{ signups    =s.val()||{}; loaded.s=true; connected=true; render(); }, ()=>{ connected=false; render(); });
+  refRoster.on("value",      s=>{ roster     =s.val()||[]; loaded.r=true; render(); });
+  refSettings.on("value",    s=>{ settings   =s.val()||{}; loaded.t=true; render(); });
+  refShiftConfig.on("value", s=>{ shiftConfig=s.val()||{}; loaded.c=true; render(); });
+} else { render(); }
+
+/* ══════════════════════════════════════════════
+   תאריכים ומשמרות
+══════════════════════════════════════════════ */
 function monthKey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); }
-function reqFor(shift){ return shift.required || REQUIRED; }
-/* כמה מתנדבים דרושים למשמרת לפי ה-id שלה */
-function reqForId(shiftId){
-  const m=shiftId.match(/^(\d{4})-(\d{2})-(\d{2})-([TSX])$/);
-  if(!m) return REQUIRED;
-  if(m[4]==="X"){
-    const key=Number(m[1])+"-"+(Number(m[2])-1)+"-"+Number(m[3]);
-    const sp=SPECIAL_SHIFTS[key];
-    return sp ? (sp.required||REQUIRED) : REQUIRED;
-  }
-  return REQUIRED;
-}
 function shiftsForMonth(y,m){
   const out=[], days=new Date(y,m+1,0).getDate();
   const startMid=new Date(SEASON_START.getFullYear(),SEASON_START.getMonth(),SEASON_START.getDate());
   for(let day=1;day<=days;day++){
     const date=new Date(y,m,day), dow=date.getDay();
-    if(date<startMid) continue;                 /* לפני הפתיחה — לא מציגים */
-    const sp=SPECIAL_SHIFTS[y+"-"+m+"-"+day];   /* משמרת חריגה? */
+    if(date<startMid) continue;
+    const sp=SPECIAL_SHIFTS[y+"-"+m+"-"+day];
     if(sp){
-      out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-X",date,kind:sp.kind,required:sp.required,special:true});
-      continue;                                 /* חריגה גוברת על היום הרגיל */
+      out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-X",date,kind:sp.kind,required:sp.required,special:true,isSaturday:false});
+      continue;
     }
-    if(dow===4) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-T",date,kind:"חמישי"});
-    else if(dow===6) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-S",date,kind:"מוצ\u05f4ש"});
+    if(dow===4) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-T",date,kind:"חמישי",required:REQUIRED,isSaturday:false});
+    else if(dow===6) out.push({id:monthKey(date)+"-"+String(day).padStart(2,"0")+"-S",date,kind:"מוצ\u05f4ש",required:REQUIRED,isSaturday:true});
   }
   return out;
 }
 function fmtShift(s){ const d=s.date; return HE_DAYS[d.getDay()]+", "+d.getDate()+"."+(d.getMonth()+1); }
+function shiftTimeLabel(s){
+  if(s.isSaturday) return "צאת שבת–00:00";
+  return "19:00–00:00";
+}
 function isPast(date){ const t=new Date(); t.setHours(0,0,0,0); return date<t; }
 function daysUntil(date){ const t=new Date(); t.setHours(0,0,0,0); return Math.round((date-t)/86400000); }
 function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-/* ── סנכרון בזמן אמת ── */
-if(db){
-  refSignups.on("value", s=>{ signups=s.val()||{}; loaded.s=true; connected=true; render(); }, e=>{ connected=false; render(); });
-  refRoster.on("value",  s=>{ roster=s.val()||[];  loaded.r=true; render(); });
-  refSettings.on("value",s=>{ settings=s.val()||{}; loaded.t=true; render(); });
-} else { render(); }
+/* ══════════════════════════════════════════════
+   לוגיקת slots
+   ---
+   כל משמרת יכולה להיות:
+   א. רגילה (halfEnabled=false/undefined): slot יחיד = shiftId
+   ב. עם חצי-משמרות (halfEnabled=true):   slot 0 = shiftId+":0", slot 1 = shiftId+":1"
+   בנוסף, אם קיימים signups[shiftId] (הרשמות ישנות לפני הפיצ'ר) — הם מוצגים כ"משמרת שלמה" גם בחצי-מצב.
+══════════════════════════════════════════════ */
+function getCfg(shiftId){
+  return shiftConfig[shiftId] || { halfEnabled: false, slots: [] };
+}
+function isHalfEnabled(shiftId){
+  return !!(shiftConfig[shiftId] && shiftConfig[shiftId].halfEnabled);
+}
+/* כמה מתנדבים דרושים ל-slot מסוים */
+function reqForSlot(shiftId, slotIdx){
+  const cfg = shiftConfig[shiftId];
+  if(cfg && cfg.halfEnabled && cfg.slots && cfg.slots[slotIdx])
+    return Number(cfg.slots[slotIdx].required) || 2;
+  return REQUIRED;
+}
+/* האם משמרת שלמה מלאה (לצורך CSS) */
+function isShiftFull(shift){
+  const id=shift.id;
+  if(isHalfEnabled(id)){
+    const cfg=shiftConfig[id];
+    const s0=(signups[id+":0"]||[]).length >= (reqForSlot(id,0));
+    const s1=(signups[id+":1"]||[]).length >= (reqForSlot(id,1));
+    return s0 && s1;
+  }
+  return (signups[id]||[]).length >= shift.required;
+}
+function hasAnyGap(shift){
+  const id=shift.id;
+  if(isHalfEnabled(id)){
+    const s0=(signups[id+":0"]||[]).length < reqForSlot(id,0);
+    const s1=(signups[id+":1"]||[]).length < reqForSlot(id,1);
+    return s0||s1;
+  }
+  return (signups[id]||[]).length < shift.required;
+}
 
-/* ── פעולות משמרת ── */
-function join(shiftId){
+/* ══════════════════════════════════════════════
+   פעולות
+══════════════════════════════════════════════ */
+function join(slotKey, required){
   if(!userName){ errMsg="בחרו את השם שלכם מהרשימה למעלה"; okMsg=""; return render(); }
-  const cur = signups[shiftId]||[];
-  if(cur.includes(userName)){ errMsg="כבר נרשמתם למשמרת זו"; okMsg=""; return render(); }
-  if(cur.length>=reqForId(shiftId)){ errMsg="המשמרת כבר מלאה"; okMsg=""; return render(); }
+  const cur=signups[slotKey]||[];
+  if(cur.includes(userName)){ errMsg="כבר נרשמתם לסלוט זה"; okMsg=""; return render(); }
+  if(cur.length>=required){ errMsg="הסלוט כבר מלא"; okMsg=""; return render(); }
   errMsg=""; okMsg="";
-  refSignups.child(shiftId).set([...cur,userName]).catch(()=>{ errMsg="השמירה נכשלה — בדקו חיבור"; render(); });
+  refSignups.child(slotKey).set([...cur,userName]).catch(()=>{ errMsg="השמירה נכשלה"; render(); });
 }
-function leave(shiftId,who){
+function leave(slotKey, who){
   errMsg=""; okMsg="";
-  refSignups.child(shiftId).set((signups[shiftId]||[]).filter(n=>n!==who)).catch(()=>{ errMsg="השמירה נכשלה"; render(); });
+  refSignups.child(slotKey).set((signups[slotKey]||[]).filter(n=>n!==who)).catch(()=>{ errMsg="השמירה נכשלה"; render(); });
 }
-
-/* ── הוספת מתנדב למאגר ── */
 function addRosterName(nm, selectSelf){
   nm=(nm||"").trim();
   if(!nm){ errMsg="הקלידו שם"; return render(); }
@@ -201,27 +289,13 @@ function addRosterName(nm, selectSelf){
   refRoster.set([...roster,nm].sort((a,b)=>a.localeCompare(b,"he")));
   if(selectSelf){ userName=nm; showJoinBox=false; okMsg="נוספת למאגר! בחר/י משמרת והירשם/י."; }
 }
-/* מנהל מוסיף מישהו */
-function addToRoster(){
-  const el=document.getElementById("newVol"); if(!el) return;
-  addRosterName(el.value, false);
-}
-/* מתנדב מוסיף את עצמו */
-function addSelfToRoster(){
-  const el=document.getElementById("selfVol"); if(!el) return;
-  addRosterName(el.value, true);
-}
-function removeFromRoster(nm){
-  errMsg=""; okMsg="";
-  refRoster.set(roster.filter(n=>n!==nm));
-}
+function addToRoster(){ const el=document.getElementById("newVol"); if(el) addRosterName(el.value,false); }
+function addSelfToRoster(){ const el=document.getElementById("selfVol"); if(el) addRosterName(el.value,true); }
+function removeFromRoster(nm){ refRoster.set(roster.filter(n=>n!==nm)); }
 function saveSiteUrl(){
   const el=document.getElementById("siteUrl"); if(!el) return;
-  refSettings.child("siteUrl").set(el.value.trim());
-  okMsg="הקישור נשמר"; errMsg=""; render();
+  refSettings.child("siteUrl").set(el.value.trim()); okMsg="הקישור נשמר"; errMsg=""; render();
 }
-
-/* ── מנהל ── */
 function tryAdmin(){
   const v=(document.getElementById("codeInput")||{}).value||"";
   if(v.trim().toLowerCase()===ADMIN_CODE){ isAdmin=true; showAdminBox=false; errMsg=""; }
@@ -230,44 +304,86 @@ function tryAdmin(){
 }
 function shiftMonth(d){
   let m=view.month+d, y=view.year;
-  if(m<0){m=11;y--;} if(m>11){m=0;y++;}
-  view={year:y,month:m}; render();
+  if(m<0){m=11;y--;} if(m>11){m=0;y++;} view={year:y,month:m}; render();
 }
 
-/* ── תזכורת וואטסאפ ── */
+/* ── Admin: פתח/סגור config panel ── */
+function openAdminConfig(shiftId){
+  adminOpenConfig = shiftId;
+  const cfg = getCfg(shiftId);
+  /* מאתחל draft */
+  cfgDraft = {
+    halfEnabled: !!cfg.halfEnabled,
+    slots: cfg.slots ? cfg.slots.map(s=>({...s})) : [
+      { label:"פתיחה", timeRange:"19:00–21:30", required:2 },
+      { label:"סגירה", timeRange:"21:30–00:00", required:2 }
+    ]
+  };
+  if(cfgDraft.slots.length<2) cfgDraft.slots.push({ label:"סגירה", timeRange:"21:30–00:00", required:2 });
+  render();
+}
+function closeAdminConfig(){ adminOpenConfig=null; render(); }
+function saveAdminConfig(shiftId){
+  const d=cfgDraft;
+  refShiftConfig.child(shiftId).set({
+    halfEnabled: d.halfEnabled,
+    slots: d.slots.map(s=>({ label:s.label, timeRange:s.timeRange, required:Number(s.required)||2 }))
+  });
+  adminOpenConfig=null; render();
+}
+function toggleHalfEnabled(){ cfgDraft.halfEnabled=!cfgDraft.halfEnabled; render(); }
+function draftSlotChange(idx, field, val){
+  if(!cfgDraft.slots[idx]) cfgDraft.slots[idx]={};
+  cfgDraft.slots[idx][field]=val;
+}
+
+/* ── WhatsApp ── */
 function sendWhatsApp(){
   const all=[];
-  for(let off=0; off<2; off++){
+  for(let off=0;off<2;off++){
     let m=view.month+off, y=view.year;
     if(m>11){m-=12;y++;}
     shiftsForMonth(y,m).forEach(s=>{
-      if(!isPast(s.date) && (signups[s.id]||[]).length<reqFor(s))
-        all.push({s, miss:reqFor(s)-(signups[s.id]||[]).length});
+      if(isPast(s.date)) return;
+      if(isHalfEnabled(s.id)){
+        const miss0=reqForSlot(s.id,0)-(signups[s.id+":0"]||[]).length;
+        const miss1=reqForSlot(s.id,1)-(signups[s.id+":1"]||[]).length;
+        const cfg=shiftConfig[s.id];
+        if(miss0>0) all.push({ label:fmtShift(s)+" ("+((cfg.slots&&cfg.slots[0]&&cfg.slots[0].label)||"פתיחה")+")", miss:miss0 });
+        if(miss1>0) all.push({ label:fmtShift(s)+" ("+((cfg.slots&&cfg.slots[1]&&cfg.slots[1].label)||"סגירה")+")", miss:miss1 });
+      } else {
+        const miss=s.required-(signups[s.id]||[]).length;
+        if(miss>0) all.push({ label:fmtShift(s), miss });
+      }
     });
   }
   if(all.length===0){ okMsg="אין כרגע משמרות חסרות — אין צורך בתזכורת"; errMsg=""; return render(); }
   let txt="בריה — דרושים מתנדבים למשמרות הבאות:\n\n";
-  all.forEach(g=> txt+="• "+fmtShift(g.s)+" — חסרים "+g.miss+"\n");
+  all.forEach(g=> txt+="• "+g.label+" — חסרים "+g.miss+"\n");
   const url=(settings.siteUrl||"").trim();
   if(url) txt+="\nלהרשמה: "+url;
   txt+="\n\nתודה רבה 🙏";
   window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");
 }
 
-/* ── ציור ── */
+/* ══════════════════════════════════════════════
+   ציור
+══════════════════════════════════════════════ */
 function render(){
   const app=document.getElementById("app");
-  if(db && !(loaded.s&&loaded.r&&loaded.t)){ app.innerHTML='<p class="note">טוען את הלוח…</p>'; return; }
+  if(db && !(loaded.s&&loaded.r&&loaded.t&&loaded.c)){ app.innerHTML='<p class="note">טוען את הלוח…</p>'; return; }
 
   const shifts=shiftsForMonth(view.year,view.month);
   const monthLabel=HE_MONTHS[view.month]+" "+view.year;
-  const filled=shifts.filter(s=>(signups[s.id]||[]).length>=reqFor(s)).length;
+
+  /* סיכום */
   const future=shifts.filter(s=>!isPast(s.date));
-  const gaps=future.filter(s=>(signups[s.id]||[]).length<reqFor(s));
+  const gapShifts=future.filter(s=>hasAnyGap(s));
+  const filledCount=shifts.filter(s=>isShiftFull(s)).length;
 
   let h="";
   h+='<div class="title">לוח מתנדבים בריה</div>';
-  h+='<div class="sub">לוח משמרות מתנדבים · ימי חמישי ומוצאי שבת · 2 מתנדבים למשמרת</div>';
+  h+='<div class="sub">לוח משמרות מתנדבים · ימי חמישי ומוצאי שבת · '+REQUIRED+' מתנדבים למשמרת</div>';
   h+='<div class="rule"></div>';
 
   /* כרטיס זיהוי */
@@ -280,9 +396,7 @@ function render(){
     roster.forEach(nm=>{ h+='<option value="'+esc(nm)+'"'+(nm===userName?' selected':'')+'>'+esc(nm)+'</option>'; });
     h+='</select>';
   }
-  h+='<div style="margin-top:10px">';
-  h+='<button class="linkbtn" id="joinRosterToggle">+ אני חדש/ה — הוסף/י אותי למאגר</button>';
-  h+='</div>';
+  h+='<div style="margin-top:10px"><button class="linkbtn" id="joinRosterToggle">+ אני חדש/ה — הוסף/י אותי למאגר</button></div>';
   if(showJoinBox){
     h+='<div style="margin-top:8px;display:flex;gap:8px">';
     h+='<input class="input" id="selfVol" placeholder="השם המלא שלי">';
@@ -310,53 +424,111 @@ function render(){
   h+='<h2>'+monthLabel+'</h2>';
   h+='<button class="navbtn" id="prev">›</button></div>';
 
-  /* סיכום */
+  /* סיכום pills */
   h+='<div class="summary">';
-  h+='<div class="pill '+(gaps.length>0?"alert":"ok")+'"><div class="big">'+gaps.length+'</div>';
+  h+='<div class="pill '+(gapShifts.length>0?"alert":"ok")+'"><div class="big">'+gapShifts.length+'</div>';
   h+='<div class="cap">משמרות עתידיות שחסרות מתנדבים</div></div>';
-  h+='<div class="pill"><div class="big">'+filled+'/'+shifts.length+'</div>';
+  h+='<div class="pill"><div class="big">'+filledCount+'/'+shifts.length+'</div>';
   h+='<div class="cap">משמרות מאוישות במלואן</div></div></div>';
 
-  if(gaps.length>0){
+  /* באנר חסרים */
+  if(gapShifts.length>0){
     h+='<div class="card" style="border-color:#7d3528;background:#25140f">';
     h+='<strong style="color:#e8694d">⚠ דרושים מתנדבים למשמרות הבאות:</strong><ul class="gaplist">';
-    gaps.forEach(s=>{ h+='<li>'+fmtShift(s)+' — חסרים '+(reqFor(s)-(signups[s.id]||[]).length)+'</li>'; });
+    gapShifts.forEach(s=>{
+      if(isHalfEnabled(s.id)){
+        const cfg=shiftConfig[s.id];
+        const miss0=reqForSlot(s.id,0)-(signups[s.id+":0"]||[]).length;
+        const miss1=reqForSlot(s.id,1)-(signups[s.id+":1"]||[]).length;
+        const l0=(cfg.slots&&cfg.slots[0]&&cfg.slots[0].label)||"פתיחה";
+        const l1=(cfg.slots&&cfg.slots[1]&&cfg.slots[1].label)||"סגירה";
+        if(miss0>0) h+='<li>'+fmtShift(s)+' ('+l0+') — חסרים '+miss0+'</li>';
+        if(miss1>0) h+='<li>'+fmtShift(s)+' ('+l1+') — חסרים '+miss1+'</li>';
+      } else {
+        h+='<li>'+fmtShift(s)+' — חסרים '+(s.required-(signups[s.id]||[]).length)+'</li>';
+      }
+    });
     h+='</ul></div>';
   }
 
-  /* משמרות */
+  /* ── משמרות ── */
   if(shifts.length===0) h+='<p class="note">אין משמרות בחודש זה.</p>';
+
   shifts.forEach(s=>{
-    const list=signups[s.id]||[];
-    const need=reqFor(s);
-    const past=isPast(s.date), full=list.length>=need;
+    const id=s.id;
+    const past=isPast(s.date);
     const du=daysUntil(s.date);
-    const urgent=!past&&!full&&du>=0&&du<=URGENT_DAYS;
-    let cls=past?"past":urgent?"urgent":full?"full":"gap";
+    const fullShift=isShiftFull(s);
+    const hasGap=hasAnyGap(s);
+    const urgent=!past&&hasGap&&du>=0&&du<=URGENT_DAYS;
+    const halfOn=isHalfEnabled(id);
+    const cfg=getCfg(id);
+
+    let cls=past?"past":urgent?"urgent":fullShift?"full":"gap";
     h+='<div class="shift '+cls+'">';
+
+    /* Header */
+    h+='<div class="shift-header">';
     h+='<span class="shift-date">'+fmtShift(s)+'</span>';
+    h+='<span class="shift-time">'+shiftTimeLabel(s)+'</span>';
     h+='<span class="shift-kind'+(s.special?' special':'')+'">'+s.kind+'</span>';
+    if(halfOn) h+='<span class="half-tag">חצי-משמרות פעיל</span>';
     if(urgent) h+='<span class="urgent-tag">דחוף · בעוד '+du+' ימים</span>';
-    h+='<div class="shift-names">';
-    list.forEach(who=>{
-      h+='<span class="chip">'+esc(who);
-      if(!past&&(isAdmin||who===userName))
-        h+='<span class="x" data-leave="'+esc(s.id)+'" data-who="'+esc(who)+'" title="ביטול הרשמה">✕</span>';
-      h+='</span>';
-    });
-    for(let i=0;i<Math.max(0,need-list.length);i++) h+='<span class="empty-slot">מקום פנוי</span>';
     h+='</div>';
-    if(!past&&!full) h+='<button class="joinbtn" data-join="'+esc(s.id)+'"'+(userName?"":" disabled")+'>אני נרשם/ת</button>';
-    h+='</div>';
+
+    if(!halfOn){
+      /* ── מצב רגיל: slot יחיד ── */
+      const list=signups[id]||[];
+      const need=s.required;
+      h+=renderSlotSection(id, id, list, need, past, "משמרת שלמה", shiftTimeLabel(s));
+    } else {
+      /* ── חצי-משמרות ── */
+      /* הרשמות ישנות (לפני הפיצ'ר) — מוצגות ככרטיס מיוחד */
+      const legacy=signups[id]||[];
+      if(legacy.length>0){
+        h+='<div class="slot-section" style="background:#fdf6e8">';
+        h+='<span class="slot-label">📌 רשומים ישנים (משמרת שלמה)</span>';
+        h+='<div class="shift-names">';
+        legacy.forEach(who=>{
+          h+='<span class="chip full-chip">'+esc(who);
+          if(!past&&(isAdmin||who===userName))
+            h+='<span class="x" data-leave="'+esc(id)+'" data-who="'+esc(who)+'" title="ביטול">✕</span>';
+          h+='</span>';
+        });
+        h+='</div></div>';
+      }
+      /* שני slots */
+      for(let i=0;i<2;i++){
+        const slotCfg=(cfg.slots&&cfg.slots[i])||{label:i===0?"פתיחה":"סגירה",timeRange:i===0?"19:00–21:30":"21:30–00:00",required:2};
+        const slotKey=id+":"+i;
+        const list=signups[slotKey]||[];
+        h+=renderSlotSection(id, slotKey, list, Number(slotCfg.required)||2, past, slotCfg.label, slotCfg.timeRange);
+      }
+    }
+
+    /* ── Admin bar ── */
+    if(isAdmin && !past){
+      if(adminOpenConfig===id){
+        h+=renderAdminConfigPanel(id, cfg);
+      } else {
+        h+='<div class="shift-admin-bar">';
+        h+='<span class="label">מנהל:</span>';
+        h+='<button class="toggle-half-btn'+(halfOn?"":" off")+'" data-toggle-half="'+esc(id)+'">'+(halfOn?"⬡ בטל חצי-משמרות":"⬡ הפעל חצי-משמרות")+'</button>';
+        h+='<button class="ghostbtn sm" data-open-cfg="'+esc(id)+'">⚙ הגדרות</button>';
+        h+='</div>';
+      }
+    }
+
+    h+='</div>'; /* /shift */
   });
 
   /* ── אזור מנהל ── */
   if(isAdmin){
     h+='<div class="card admin-card" style="margin-top:22px">';
     h+='<div class="section-title">תזכורת לקבוצת וואטסאפ</div>';
-    h+='<p class="note" style="margin-bottom:10px">נסחר אוטומטית הודעה עם כל המשמרות החסרות בחודשיים הקרובים, ופותח את וואטסאפ מוכן לשליחה.</p>';
+    h+='<p class="note" style="margin-bottom:10px">נסחר אוטומטית הודעה עם כל המשמרות החסרות בחודשיים הקרובים.</p>';
     h+='<button class="wabtn" id="waBtn">📲 שלח תזכורת בוואטסאפ</button>';
-    h+='<div class="label" style="margin-top:14px">קישור הכלי (מופיע בתוך התזכורת)</div>';
+    h+='<div class="label" style="margin-top:14px">קישור הכלי (מופיע בתזכורת)</div>';
     h+='<div style="display:flex;gap:8px">';
     h+='<input class="input" id="siteUrl" placeholder="https://...github.io/bar/" value="'+esc(settings.siteUrl||"")+'">';
     h+='<button class="ghostbtn" id="saveUrl">שמור</button></div>';
@@ -364,7 +536,6 @@ function render(){
 
     h+='<div class="card admin-card">';
     h+='<div class="section-title">מאגר המתנדבים ('+roster.length+')</div>';
-    h+='<p class="note" style="margin-bottom:10px">מתנדבים מוסיפים את עצמם דרך הכרטיס העליון. כאן ניתן להוסיף ידנית או להסיר.</p>';
     h+='<div style="display:flex;gap:8px;margin-bottom:12px">';
     h+='<input class="input" id="newVol" placeholder="שם מתנדב חדש">';
     h+='<button class="joinbtn" id="addVol">הוסף</button></div>';
@@ -376,11 +547,66 @@ function render(){
     h+='</div>';
   }
 
-  h+='<p class="note" style="margin-top:20px">הלוח משותף ומתעדכן לכולם בזמן אמת. ';
-  h+='מתנדב יכול לבטל רק את ההרשמה של עצמו; מנהל יכול לבטל כל הרשמה ולנהל את מאגר המתנדבים.</p>';
-
+  h+='<p class="note" style="margin-top:20px">הלוח משותף ומתעדכן לכולם בזמן אמת.</p>';
   app.innerHTML=h;
   wire();
+}
+
+/* ── עוזר: מצייר section של slot אחד ── */
+function renderSlotSection(shiftId, slotKey, list, need, past, slotLabel, timeRange){
+  let h='<div class="slot-section">';
+  h+='<span class="slot-label">'+esc(slotLabel)+'</span>';
+  if(timeRange) h+='<span class="slot-time-badge">'+esc(timeRange)+'</span>';
+  h+='<div class="shift-names">';
+  list.forEach(who=>{
+    h+='<span class="chip">'+esc(who);
+    if(!past&&(isAdmin||who===userName))
+      h+='<span class="x" data-leave="'+esc(slotKey)+'" data-who="'+esc(who)+'" title="ביטול">✕</span>';
+    h+='</span>';
+  });
+  for(let i=0;i<Math.max(0,need-list.length);i++) h+='<span class="empty-slot">מקום פנוי</span>';
+  h+='</div>';
+  if(!past&&list.length<need){
+    h+='<button class="joinbtn" data-join="'+esc(slotKey)+'" data-req="'+need+'"'+(userName?"":" disabled")+'>אני נרשם/ת</button>';
+  }
+  h+='</div>';
+  return h;
+}
+
+/* ── Admin config panel HTML ── */
+function renderAdminConfigPanel(shiftId, cfg){
+  const d=cfgDraft;
+  let h='<div class="admin-config-box">';
+  h+='<div style="font-weight:700;font-size:0.9rem;margin-bottom:10px;color:#2a4f28">⚙ הגדרות משמרת</div>';
+
+  /* toggle חצי */
+  h+='<div class="row">';
+  h+='<span style="font-size:0.85rem">חצי-משמרות:</span>';
+  h+='<button class="toggle-half-btn'+(d.halfEnabled?"":" off")+'" id="draftToggleHalf">'+(d.halfEnabled?"✅ פעיל":"⬜ כבוי")+'</button>';
+  h+='</div>';
+
+  /* slots */
+  if(d.halfEnabled){
+    for(let i=0;i<2;i++){
+      const sl=d.slots[i]||{label:"",timeRange:"",required:2};
+      h+='<div style="border-top:1px solid #c9d8be;padding-top:8px;margin-top:8px">';
+      h+='<div style="font-size:0.8rem;font-weight:600;margin-bottom:6px">Slot '+(i+1)+'</div>';
+      h+='<div class="row"><span style="font-size:0.82rem;min-width:55px">תיאור</span>';
+      h+='<input class="input" style="flex:1" id="draftLabel'+i+'" value="'+esc(sl.label||"")+'" placeholder="פתיחה / סגירה"></div>';
+      h+='<div class="row"><span style="font-size:0.82rem;min-width:55px">שעות</span>';
+      h+='<input class="input" style="flex:1" id="draftTime'+i+'" value="'+esc(sl.timeRange||"")+'" placeholder="19:00–21:30"></div>';
+      h+='<div class="row"><span style="font-size:0.82rem;min-width:55px">דרושים</span>';
+      h+='<input class="mini-input" type="number" min="1" max="10" id="draftReq'+i+'" value="'+(sl.required||2)+'"></div>';
+      h+='</div>';
+    }
+  }
+
+  h+='<div class="row" style="margin-top:12px">';
+  h+='<button class="savebtn" data-save-cfg="'+esc(shiftId)+'">שמור</button>';
+  h+='<button class="cancelbtn" id="cancelCfg">ביטול</button>';
+  h+='</div>';
+  h+='</div>';
+  return h;
 }
 
 /* ── חיבור אירועים ── */
@@ -402,8 +628,55 @@ function wire(){
   const p=document.getElementById("prev"), n=document.getElementById("next");
   if(p) p.onclick=()=>shiftMonth(1);
   if(n) n.onclick=()=>shiftMonth(-1);
-  document.querySelectorAll("[data-join]").forEach(b=>{ b.onclick=()=>join(b.getAttribute("data-join")); });
-  document.querySelectorAll("[data-leave]").forEach(x=>{ x.onclick=()=>leave(x.getAttribute("data-leave"),x.getAttribute("data-who")); });
+
+  /* join / leave */
+  document.querySelectorAll("[data-join]").forEach(b=>{
+    b.onclick=()=>join(b.getAttribute("data-join"), Number(b.getAttribute("data-req"))||REQUIRED);
+  });
+  document.querySelectorAll("[data-leave]").forEach(x=>{
+    x.onclick=()=>leave(x.getAttribute("data-leave"),x.getAttribute("data-who"));
+  });
+
+  /* admin shift config */
+  document.querySelectorAll("[data-toggle-half]").forEach(b=>{
+    b.onclick=()=>{
+      const id=b.getAttribute("data-toggle-half");
+      const cur=getCfg(id);
+      if(cur.halfEnabled){
+        refShiftConfig.child(id+"/halfEnabled").set(false);
+      } else {
+        /* פתח panel הגדרה אם הפיצ'ר לא הוגדר מעולם, אחרת פשוט הפעל */
+        if(cur.slots && cur.slots.length>0){
+          refShiftConfig.child(id+"/halfEnabled").set(true);
+        } else {
+          openAdminConfig(id); cfgDraft.halfEnabled=true;
+        }
+      }
+    };
+  });
+  document.querySelectorAll("[data-open-cfg]").forEach(b=>{
+    b.onclick=()=>openAdminConfig(b.getAttribute("data-open-cfg"));
+  });
+
+  /* draft panel */
+  const dth=document.getElementById("draftToggleHalf");
+  if(dth) dth.onclick=toggleHalfEnabled;
+  /* שמירת draft בזמן אמת לפני save */
+  for(let i=0;i<2;i++){
+    const el0=document.getElementById("draftLabel"+i);
+    if(el0) el0.oninput=e=>draftSlotChange(i,"label",e.target.value);
+    const el1=document.getElementById("draftTime"+i);
+    if(el1) el1.oninput=e=>draftSlotChange(i,"timeRange",e.target.value);
+    const el2=document.getElementById("draftReq"+i);
+    if(el2) el2.oninput=e=>draftSlotChange(i,"required",e.target.value);
+  }
+  document.querySelectorAll("[data-save-cfg]").forEach(b=>{
+    b.onclick=()=>saveAdminConfig(b.getAttribute("data-save-cfg"));
+  });
+  const cc=document.getElementById("cancelCfg");
+  if(cc) cc.onclick=closeAdminConfig;
+
+  /* admin roster / settings */
   const wb=document.getElementById("waBtn");
   if(wb) wb.onclick=sendWhatsApp;
   const av=document.getElementById("addVol");
