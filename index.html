@@ -324,11 +324,15 @@ function openAdminConfig(shiftId){
 }
 function closeAdminConfig(){ adminOpenConfig=null; render(); }
 function saveAdminConfig(shiftId){
-  const d=cfgDraft;
-  refShiftConfig.child(shiftId).set({
-    halfEnabled: d.halfEnabled,
-    slots: d.slots.map(s=>({ label:s.label, timeRange:s.timeRange, required:Number(s.required)||2 }))
-  });
+  const halfEnabled = cfgDraft.halfEnabled;
+  const slots = [];
+  for(let i=0;i<2;i++){
+    const label     = (document.getElementById("draftLabel"+i)||{}).value ?? cfgDraft.slots[i]?.label ?? "";
+    const timeRange = (document.getElementById("draftTime"+i)||{}).value  ?? cfgDraft.slots[i]?.timeRange ?? "";
+    const required  = Number((document.getElementById("draftReq"+i)||{}).value) || cfgDraft.slots[i]?.required || 2;
+    slots.push({ label, timeRange, required });
+  }
+  refShiftConfig.child(shiftId).set({ halfEnabled, slots });
   adminOpenConfig=null; render();
 }
 function toggleHalfEnabled(){ cfgDraft.halfEnabled=!cfgDraft.halfEnabled; render(); }
